@@ -1,0 +1,2 @@
+classify
+Description: classify is a classification framework intended to streamline the evaluation performance of classifiers in various settings with numerous error rate estimators (e.g. leave-one-out, .632).

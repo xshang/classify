@@ -1,0 +1,15 @@
+Minimal classify() requirements
+	Takes a list of data sets
+		Each data set is provided as a list with x and y component
+	Test error rates are determined with (repeated) partitioning as in rda sims
+	Takes a list of classifiers (use only defaults at first)
+		Each classifier has a list of options (do this after some basics are done)
+	Returns
+		List of test predictions for each partition
+		Average test error rates and their standard errors
+
+After the basic list of results is completed, add the option to save the results as other types.
+	classify(..., results = c("list", "mysql", "data.frame"), ...)
+	To do this, write these helper functions:
+		results_as_data.frame()
+		results_as_db()

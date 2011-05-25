@@ -1,0 +1,9 @@
+Package: classify
+Title: classify
+Version: 0.0.1
+Date: 2011-05-25
+Author: John A. Ramey
+Maintainer: John A. Ramey <johnramey@gmail.com>
+Description: classify is a classification framework intended to streamline the evaluation performance of classifiers in various settings with numerous error rate estimators (e.g. leave-one-out, .632).
+Depends: foreach
+License: GPL-2
