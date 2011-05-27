@@ -25,16 +25,12 @@
 classify <- function(list_data, list_classifiers, error_est = c("split", "cv",
 "boot", "632", "632+"), seed = NULL, ...) {
   if(!is.null(seed)) set.seed(seed)
-  # TODO: Return a data.frame with the following columns:
-  #   data_set
-  #   classifier
-  #   error_rate
-  #   standard_error
+
   sim_results <- foreach(d = list_data, .combine=rbind) %do% {
     error_results <- error_split(d, list_classifiers, ...)
     cbind(data_set = d$name, error_results)
   }
-  # TODO: Summarize results here
+
   sim_summary <- ddply(
     sim_results,
     .(data_set, method), 
@@ -45,6 +41,20 @@ classify <- function(list_data, list_classifiers, error_est = c("split", "cv",
   list(results = sim_results, summary = sim_summary)
 }
 
+#' Classification error rate estimation via repeated random splitting of data
+#'
+#' list_classifiers is a list of classifiers, where each classifier is passed in as a list.
+#' Each classifier must specify a 'classifier' option to indicate the function to call
+#' to build the classification rule. By default, classify will use the generic function
+#' predict. An optional 'predict' can be added to list_classifiers to override the default.
+#' Other options???
+#'
+#' @param d TODO
+#' @param list_classifiers TODO
+#' @param split_pct The percentage of observations allocated as training data.
+#' @param num_splits The number of splits performed for error rate estimation.
+#'
+#' @return error_results TODO
 error_split <- function(d, list_classifiers, split_pct = 0.5, num_splits = 50,
 ...) {
     N <- nrow(d$x)
@@ -88,6 +98,19 @@ error_split <- function(d, list_classifiers, split_pct = 0.5, num_splits = 50,
     error_results
 }
 
+#' Retrieves the functions for the specified classifier.
+#'
+#' TODO
+#' 
+#' Example:
+#' cl = list(
+#'   method = "RDA",
+#'   classifier = "rda",
+#'   predict = "predict_rda"
+#' )
+#' 
+#' @param cl TODO
+#' @return list TODOs
 get_cl_attrib <- function(cl) {
   # Set defaults for classifier attributes.
   cl_method <- cl$classifier
