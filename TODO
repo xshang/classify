@@ -4,6 +4,10 @@ Write unit test
 
 Once unit test passes, compile version 0.0.1 and add tag for github
 
+Add option to generate training/test data from a function (e.g. MVN data)
+  Use an iterator to make repeated calls to this function
+  Repeat this B times
+
 After the basic list of results is completed, add the option to save the results as other types.
 	classify(..., results = c("list", "mysql", "data.frame"), ...)
 	To do this, write these helper functions:
