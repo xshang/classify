@@ -34,3 +34,5 @@ Look at the 'foreach' vignette regarding "nesting foreach loops"
 
 Add plot_classify() that plots avg_error and  boxplots of test error rates.
   Use plotting code from rlda-sim study.
+
+Update README file to use markdown
