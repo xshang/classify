@@ -1,18 +1,14 @@
-Write unit test
-	Partition data set 5 times manually
-	Make sure that the predictions match for each of the iterations
-
-Once unit test passes, compile version 0.0.1 and add tag for github
+Add option to partition data by percentage or by a specific number to hold out
 
 Add option to generate training/test data from a function (e.g. MVN data)
   Use an iterator to make repeated calls to this function
   Repeat this B times
 
 After the basic list of results is completed, add the option to save the results as other types.
-	classify(..., results = c("list", "mysql", "data.frame"), ...)
-	To do this, write these helper functions:
-		results_as_data.frame()
-		results_as_db()
+  classify(..., results = c("list", "mysql", "data.frame"), ...)
+  To do this, write these helper functions:
+    results_as_data.frame()
+    results_as_db()
 
 Error Rate Estimators
   Use match.arg() (?) to make sure an appropriate estimator is used
@@ -21,18 +17,18 @@ Error Rate Estimators
   Add warning()'s if any error rate estimator is used besides "split"
 
 Refactor calculation of error rates
-	Create helper method that does this
-	The specifics of error rate estimators are determined here
-	Return multiple error rates?
-	At first make this simply:
-		est_error(list_classifiers, x, y,  est = "partition", ...) then later
-		est_error(list_classifiers, est = c("partition", "cv", "632", "632+"), ...)
+  Create helper method that does this
+  The specifics of error rate estimators are determined here
+  Return multiple error rates?
+  At first make this simply:
+    est_error(list_classifiers, x, y,  est = "partition", ...) then later
+    est_error(list_classifiers, est = c("partition", "cv", "632", "632+"), ...)
 
 Roxygen documentation
-
-Look at the 'foreach' vignette regarding "nesting foreach loops"
 
 Add plot_classify() that plots avg_error and  boxplots of test error rates.
   Use plotting code from rlda-sim study.
 
 Update README file to use markdown
+
+Start building a wiki as documentation for classify

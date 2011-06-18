@@ -23,7 +23,7 @@
 #'
 #' @return list_results list of results
 classify <- function(list_data, list_classifiers, error_est = c("split", "cv",
-"boot", "632", "632+"), seed = NULL, ...) {
+"boot", "632", "632+"), predictions = TRUE, seed = NULL, ...) {
   if(!is.null(seed)) set.seed(seed)
 
   sim_results <- foreach(d = list_data, .combine=rbind) %do% {
@@ -38,7 +38,9 @@ classify <- function(list_data, list_classifiers, error_est = c("split", "cv",
     avg_error = mean(error_rate),
     SE = sd(error_rate)
   )
-  list(results = sim_results, summary = sim_summary)
+  list_ret <- list(results = sim_results, summary = sim_summary)
+  #if(predictions) list_ret$predictions <- sim_predictions
+  list_ret
 }
 
 #' Classification error rate estimation via repeated random splitting of data
@@ -60,8 +62,7 @@ error_split <- function(d, list_classifiers, split_pct = 0.5, num_splits = 50,
     N <- nrow(d$x)
     list_sim <- foreach(i = icount(num_splits)) %dopar% {
       # Partition the data sets.
-      obs <- seq_len(N)
-      train_obs <- sort(sample(obs, split_pct * N))
+      train_obs <- sample(seq_len(N), split_pct * N)
       test_obs <- which(!(obs %in% train_obs))
       train_x <- d$x[train_obs,]
       test_x <- d$x[test_obs,]
