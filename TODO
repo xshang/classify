@@ -1,10 +1,13 @@
-Add option to partition data by percentage or by a specific number to hold out
+Version 0.0.2
+  Add model selection feature
+  Add cross-validation as error rate estimator
+  Add option to partition data by percentage or by a specific number to hold out
 
 Add option to generate training/test data from a function (e.g. MVN data)
   Use an iterator to make repeated calls to this function
   Repeat this B times
 
-After the basic list of results is completed, add the option to save the results as other types.
+Add the option to save results as other types.
   classify(..., results = c("list", "mysql", "data.frame"), ...)
   To do this, write these helper functions:
     results_as_data.frame()
@@ -13,9 +16,6 @@ After the basic list of results is completed, add the option to save the results
 Error Rate Estimators
   Move error rate estimators to R/error_rate.r
   Stub the code for everything but split
-
-Refactor calculation of error rates
-  Return multiple error rates?
 
 Roxygen documentation
 
