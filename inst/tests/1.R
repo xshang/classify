@@ -69,7 +69,7 @@ test_that("Test error rates are the same with 50% training/test split", {
   classify_out <- classify(
     list_data = list_data, 
     list_classifiers = list_classifiers, 
-    error_est = "split",
+    est = "split",
     split_pct = split_pct,
     num_splits = num_splits,
     seed = seed)
@@ -97,7 +97,7 @@ test_that("Test error rates are the same with 75% training/test split", {
   classify_out <- classify(
     list_data = list_data, 
     list_classifiers = list_classifiers, 
-    error_est = "split",
+    est = "split",
     split_pct = split_pct,
     num_splits = num_splits,
     seed = seed)
@@ -125,7 +125,7 @@ test_that("Test error rates are the same with 90% training/test split", {
   classify_out <- classify(
     list_data = list_data, 
     list_classifiers = list_classifiers, 
-    error_est = "split",
+    est = "split",
     split_pct = split_pct,
     num_splits = num_splits,
     seed = seed)

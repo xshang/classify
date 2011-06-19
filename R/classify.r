@@ -57,9 +57,7 @@ classify <- function(list_data, list_classifiers, est = "split", seed = NULL, ..
 #' @return error_results TODO
 est_error <- function(d, list_classifiers, est, ...) {
   ERROR_EST <- c("split", "cv", "boot", "632", "632+")
-  est <- pmatch(est, ERROR_EST)
-  if(is.na(est)) stop("Invalid error rate estimator.")
-  if(est == -1) stop("Ambiguous error rate estimator. Be more exact.")
+  est <- match.arg(est, ERROR_EST)
   if(est == "split") {
     error_results <- error_split(d, list_classifiers, ...)
   } else {
@@ -87,7 +85,8 @@ error_split <- function(d, list_classifiers, split_pct = 0.5, num_splits = 50,
     N <- nrow(d$x)
     list_sim <- foreach(i = icount(num_splits)) %dopar% {
       # Partition the data sets.
-      train_obs <- sample(seq_len(N), split_pct * N)
+      obs <- seq_len(N)
+      train_obs <- sort(sample(obs, split_pct * N))
       test_obs <- which(!(obs %in% train_obs))
       train_x <- d$x[train_obs,]
       test_x <- d$x[test_obs,]
