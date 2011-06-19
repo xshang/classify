@@ -2,6 +2,9 @@ Version 0.0.2
   Add model selection feature
   Add cross-validation as error rate estimator
   Add option to partition data by percentage or by a specific number to hold out
+  Add Roxygen documentation
+  Move error rate estimators to error_rate.r
+  Stub the code for everything but split
 
 Add option to generate training/test data from a function (e.g. MVN data)
   Use an iterator to make repeated calls to this function
@@ -14,8 +17,6 @@ Add the option to save results as other types.
     results_as_db()
 
 Error Rate Estimators
-  Move error rate estimators to R/error_rate.r
-  Stub the code for everything but split
 
 Roxygen documentation
 
