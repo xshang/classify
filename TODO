@@ -1,6 +1,7 @@
 Version 0.0.2
   Add model selection feature
   Add variable selection to classify()
+  Add unit test for variable selection
   Add cross-validation as error rate estimator
   Add unit test for cross-validation
   Add Roxygen documentation

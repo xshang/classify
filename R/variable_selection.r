@@ -32,7 +32,7 @@ var_sel <- function(d, vs_method, ...) {
 #' @param d TODO
 #' @param q The number of variables to select.
 #'
-#' @param d TODO
+#' @return d TODO
 var_sel_anova <- function(d, q = 30) {
   p <- ncol(d$x)
   F_stats <-  apply(d$x, 2, function(col) {
@@ -40,8 +40,6 @@ var_sel_anova <- function(d, q = 30) {
   })
   F_stat_ranks <- rank(F_stats, ties = "random")
 
-  kept_vars <- which(F_stat_ranks > p - q)
-
-  d$x <- d$x[, kept_vars]
+  d$x <- d$x[, which(F_stat_ranks > p - q)]
   d
 }

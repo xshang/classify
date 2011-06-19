@@ -17,9 +17,17 @@ est_error <- function(d, list_classifiers, est, ...) {
   est <- match.arg(est, ERROR_EST)
   if(est == "split") {
     error_results <- error_split(d, list_classifiers, ...)
-  } else {
-    stop("Only the random split error rate estimator has been implemented.")
-  }
+  } else if(est == "cv") {
+    error_results <- error_cv(d, list_classifiers, ...)
+  } else if(est == "boot") {
+    error_results <- error_boot(d, list_classifiers, ...)
+  } else if(est == "632") {
+    error_results <- error_632(d, list_classifiers, ...)
+  } else if(est == "632+") {
+    error_results <- error_632plus(d, list_classifiers, ...)
+  } else if(est == "apparent") {
+    error_results <- error_apparent(d, list_classifiers, ...)
+
   error_results
 }
 
