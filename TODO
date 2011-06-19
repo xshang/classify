@@ -1,8 +1,8 @@
 Version 0.0.2
-  Add model selection feature
+  Add unit test for model selection 
   Add unit test for variable selection
-  Add cross-validation as error rate estimator
   Add unit test for cross-validation
+  Add cross-validation as error rate estimator
   Add Roxygen documentation
   Add CHANGELOG (see ggplot2 on github for example)
   Add NEWS (see ggplot2 on github for example)
@@ -11,6 +11,7 @@ Version 0.0.2
 Add to CHANGELOG
   Added plot_classify() that plots  boxplots of test error rates.
   Added variable selection to classify(). Only has ANOVA as option currently.
+  Add option for model selection, which should be added to list_classifiers.
 
 Add variable selection to classify() summary
   Include variable selection options in summary.

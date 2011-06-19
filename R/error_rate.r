@@ -132,8 +132,11 @@ vs_method = NULL, ...) {
       list_pred <- foreach(cl = list_classifiers) %do% {
         cl_attrib <- get_cl_attrib(cl)
 
-        # Call the classifier and prediction functions.
+        # Call the classifier, model selection, and prediction functions.
         cl_out <- cl_attrib$cl_train(x = train_x, y = train_y, ...)
+        if(!is.null(cl_attrib$model_select)) {
+          cl_out <- cl_attrib$model_select(obj = cl_out, x = train_x, y = train_y)
+        }
         test_pred <- cl_attrib$cl_predict(object = cl_out, newdata = test_x)
         list(
           method = cl_attrib$cl_method,

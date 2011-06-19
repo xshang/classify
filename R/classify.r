@@ -13,6 +13,7 @@
 #' Example:
 #' list_classifiers = list(
 #'   classifier = "rda",
+#'   model_select = "rda_model_select",
 #'   predict = "predict_rda"
 #' )
 #'
@@ -50,6 +51,7 @@ classify <- function(list_data, list_classifiers, est = "split", var_sel = NULL,
 #' cl = list(
 #'   method = "RDA",
 #'   classifier = "rda",
+#'   model_select = "rda_model_select",
 #'   predict = "predict_rda"
 #' )
 #' 
@@ -64,8 +66,16 @@ get_cl_attrib <- function(cl) {
   if(!is.null(cl$method)) cl_method <- cl$method
   if(!is.null(cl$predict)) cl_predict <- cl$predict
 
-  # Retrieve the classifier and predict functions.
+  # Retrieve the classifier, model selection, and predict functions.
+  # If there is no model selection function specified, it is set as NULL.
   cl_train <- get(cl$classifier)
+  cl_model_sel <- ifelse(is.null(cl$model_select), NULL, get(cl$model_select))
   cl_predict <- get(cl_predict)
-  list(cl_method = cl_method, cl_train = cl_train, cl_predict = cl_predict)
+
+  list(
+    cl_method = cl_method, 
+    cl_train = cl_train, 
+    cl_model_select = cl_model_sel,
+    cl_predict = cl_predict
+  )
 }
