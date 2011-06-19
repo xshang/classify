@@ -11,15 +11,15 @@
 #' @param ... TODO
 #'
 #' @return d TODO
-var_sel <- function(d, vs_method, ...) {
+var_sel <- function(x, y, vs_method, ...) {
   VS_METHODS <- c("anova")
   vs_method <- match.arg(vs_method, VS_METHODS)
   if(vs_method == "anova") {
-    d <- var_sel_anova(d, ...)
+    var_sel_results <- var_sel_anova(d, ...)
   } else {
     stop("Only the ANOVA variable selection method has been implemented.")
   }
-  d
+  var_sel_results 
 }
 
 #' Variable selection via analysis of variance (ANOVA).
@@ -29,17 +29,23 @@ var_sel <- function(d, vs_method, ...) {
 #' The q variables with largest values of the F statistic are kept.
 #' The remaining p - q variables are dropped.
 #' 
-#' @param d TODO
+#' @param x TODO
+#' @param y TODO
 #' @param q The number of variables to select.
 #'
 #' @return d TODO
-var_sel_anova <- function(d, q = 30) {
-  p <- ncol(d$x)
-  F_stats <-  apply(d$x, 2, function(col) {
-    summary(aov(col ~ d$y))[[1]][["F value"]][1]
+var_sel_anova <- function(x, y, q = 30) {
+  p <- ncol(x)
+  F_stats <-  apply(x, 2, function(col) {
+    summary(aov(col ~ y))[[1]][["F value"]][1]
   })
   F_stat_ranks <- rank(F_stats, ties = "random")
 
-  d$x <- d$x[, which(F_stat_ranks > p - q)]
-  d
+  kept_vars <- which(F_stat_ranks > p - q)
+  
+  list(
+    kept = kept_vars,
+    dropped = dropped_vars,
+    F_stats = F_stats
+  )
 }

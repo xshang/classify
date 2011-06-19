@@ -22,11 +22,11 @@
 #' @param seed TODO
 #'
 #' @return list_results list of results
-classify <- function(list_data, list_classifiers, est = "split", seed = NULL, ...) {
+classify <- function(list_data, list_classifiers, est = "split", var_sel = NULL, seed = NULL, ...) {
   if(!is.null(seed)) set.seed(seed)
 
   sim_results <- foreach(d = list_data, .combine=rbind) %do% {
-    error_results <- est_error(d, list_classifiers, est, ...)
+    error_results <- est_error(d, list_classifiers, est, var_sel, ...)
     cbind(data_set = d$name, error_results)
   }
 
@@ -54,7 +54,7 @@ classify <- function(list_data, list_classifiers, est = "split", seed = NULL, ..
 #' )
 #' 
 #' @param cl TODO
-#' @return list TODOs
+#' @return list TODO
 get_cl_attrib <- function(cl) {
   # Set defaults for classifier attributes.
   cl_method <- cl$classifier

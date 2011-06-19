@@ -12,21 +12,22 @@
 #' @param ... TODO
 #'
 #' @return error_results TODO
-est_error <- function(d, list_classifiers, est, ...) {
+est_error <- function(d, list_classifiers, est, var_sel = NULL, ...) {
   ERROR_EST <- c("split", "cv", "boot", "632", "632+", "apparent")
   est <- match.arg(est, ERROR_EST)
   if(est == "split") {
-    error_results <- error_split(d, list_classifiers, ...)
+    error_results <- error_split(d, list_classifiers, var_sel, ...)
   } else if(est == "cv") {
-    error_results <- error_cv(d, list_classifiers, ...)
+    error_results <- error_cv(d, list_classifiers, var_sel, ...)
   } else if(est == "boot") {
-    error_results <- error_boot(d, list_classifiers, ...)
+    error_results <- error_boot(d, list_classifiers, var_sel, ...)
   } else if(est == "632") {
-    error_results <- error_632(d, list_classifiers, ...)
+    error_results <- error_632(d, list_classifiers, var_sel, ...)
   } else if(est == "632+") {
-    error_results <- error_632plus(d, list_classifiers, ...)
+    error_results <- error_632plus(d, list_classifiers, var_sel, ...)
   } else if(est == "apparent") {
-    error_results <- error_apparent(d, list_classifiers, ...)
+    error_results <- error_apparent(d, list_classifiers, var_sel, ...)
+  }
 
   error_results
 }
@@ -110,16 +111,22 @@ error_apparent <- function(d, list_classifiers, ...) {
 #'
 #' @return error_results TODO
 error_split <- function(d, list_classifiers, split_pct = 0.5, num_splits = 50,
-...) {
+vs_method = NULL, ...) {
     N <- nrow(d$x)
     list_sim <- foreach(i = icount(num_splits)) %dopar% {
       # Partition the data sets.
       obs <- seq_len(N)
       train_obs <- sort(sample(obs, split_pct * N))
       test_obs <- which(!(obs %in% train_obs))
-      train_x <- d$x[train_obs,]
-      test_x <- d$x[test_obs,]
+
+      # Variable selection
+      kept_vars <- seq_len(ncol(d$x))
+      if(!is.null(vs_method)) {
+        kept_vars <- var_sel(d$x, d$y, vs_method, ...)$kept
+      }
+      train_x <- d$x[train_obs, kept_vars]
       train_y <- d$y[train_obs]
+      test_x <- d$x[test_obs, kept_vars]
       test_y <- d$y[test_obs]
 
       list_pred <- foreach(cl = list_classifiers) %do% {
@@ -130,6 +137,7 @@ error_split <- function(d, list_classifiers, split_pct = 0.5, num_splits = 50,
         test_pred <- cl_attrib$cl_predict(object = cl_out, newdata = test_x)
         list(
           method = cl_attrib$cl_method,
+          vs_method = vs_method,
           train_obs = train_obs,
           test_obs = test_obs,
           test_class = test_y,

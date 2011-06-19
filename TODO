@@ -1,6 +1,5 @@
 Version 0.0.2
   Add model selection feature
-  Add variable selection to classify()
   Add unit test for variable selection
   Add cross-validation as error rate estimator
   Add unit test for cross-validation
@@ -8,10 +7,16 @@ Version 0.0.2
   Add CHANGELOG (see ggplot2 on github for example)
   Add NEWS (see ggplot2 on github for example)
   Update README file to use markdown
-  Update est_error() to call each of the stubbed estimators.
 
 Add to CHANGELOG
   Added plot_classify() that plots  boxplots of test error rates.
+  Added variable selection to classify(). Only has ANOVA as option currently.
+
+Add variable selection to classify() summary
+  Include variable selection options in summary.
+    Example:
+      var_select = "ANOVA" 
+      q = 30
 
 Implement error_apparent()
 Implement error_boot()
