@@ -18,16 +18,15 @@
 #'
 #' @param list_data TODO
 #' @param list_classifiers TODO
-#' @param error_est TODO
+#' @param est TODO
 #' @param seed TODO
 #'
 #' @return list_results list of results
-classify <- function(list_data, list_classifiers, error_est = c("split", "cv",
-"boot", "632", "632+"), predictions = TRUE, seed = NULL, ...) {
+classify <- function(list_data, list_classifiers, est = "split", seed = NULL, ...) {
   if(!is.null(seed)) set.seed(seed)
 
   sim_results <- foreach(d = list_data, .combine=rbind) %do% {
-    error_results <- error_split(d, list_classifiers, ...)
+    error_results <- est_error(d, list_classifiers, est, ...)
     cbind(data_set = d$name, error_results)
   }
 
@@ -39,8 +38,34 @@ classify <- function(list_data, list_classifiers, error_est = c("split", "cv",
     SE = sd(error_rate)
   )
   list_ret <- list(results = sim_results, summary = sim_summary)
-  #if(predictions) list_ret$predictions <- sim_predictions
   list_ret
+}
+
+#' Error rate estimation via a specified method
+#'
+#' list_classifiers is a list of classifiers, where each classifier is passed in as a list.
+#' Each classifier must specify a 'classifier' option to indicate the function to call
+#' to build the classification rule. By default, classify will use the generic function
+#' predict. An optional 'predict' can be added to list_classifiers to override the default.
+#' Other options???
+#'
+#' @param d TODO
+#' @param list_classifiers TODO
+#' @param est TODO
+#' @param ... TODO
+#'
+#' @return error_results TODO
+est_error <- function(d, list_classifiers, est, ...) {
+  ERROR_EST <- c("split", "cv", "boot", "632", "632+")
+  est <- pmatch(est, ERROR_EST)
+  if(is.na(est)) stop("Invalid error rate estimator.")
+  if(est == -1) stop("Ambiguous error rate estimator. Be more exact.")
+  if(est == "split") {
+    error_results <- error_split(d, list_classifiers, ...)
+  } else {
+    stop("Only the random split error rate estimator has been implemented.")
+  }
+  error_results
 }
 
 #' Classification error rate estimation via repeated random splitting of data

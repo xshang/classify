@@ -11,18 +11,11 @@ After the basic list of results is completed, add the option to save the results
     results_as_db()
 
 Error Rate Estimators
-  Use match.arg() (?) to make sure an appropriate estimator is used
-  Write conditionals to call the appropriate error rate estimator
+  Move error rate estimators to R/error_rate.r
   Stub the code for everything but split
-  Add warning()'s if any error rate estimator is used besides "split"
 
 Refactor calculation of error rates
-  Create helper method that does this
-  The specifics of error rate estimators are determined here
   Return multiple error rates?
-  At first make this simply:
-    est_error(list_classifiers, x, y,  est = "partition", ...) then later
-    est_error(list_classifiers, est = c("partition", "cv", "632", "632+"), ...)
 
 Roxygen documentation
 
