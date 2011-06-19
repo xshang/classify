@@ -1,10 +1,19 @@
 Version 0.0.2
   Add model selection feature
   Add cross-validation as error rate estimator
-  Add option to partition data by percentage or by a specific number to hold out
+  Add unit test for cross-validation
   Add Roxygen documentation
-  Move error rate estimators to error_rate.r
-  Stub the code for everything but split
+  Add CHANGELOG (see ggplot2 on github for example)
+  Add NEWS (see ggplot2 on github for example)
+  Update README file to use markdown
+
+Add to CHANGELOG
+  Added plot_classify() that plots  boxplots of test error rates.
+
+Implement error_apparent()
+Implement error_boot()
+Implement error_632()
+Implement error_632plus()
 
 Add option to generate training/test data from a function (e.g. MVN data)
   Use an iterator to make repeated calls to this function
@@ -15,14 +24,5 @@ Add the option to save results as other types.
   To do this, write these helper functions:
     results_as_data.frame()
     results_as_db()
-
-Error Rate Estimators
-
-Roxygen documentation
-
-Add plot_classify() that plots avg_error and  boxplots of test error rates.
-  Use plotting code from rlda-sim study.
-
-Update README file to use markdown
 
 Start building a wiki as documentation for classify
