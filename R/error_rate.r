@@ -41,8 +41,58 @@ est_error <- function(d, list_classifiers, est, var_sel = NULL, ...) {
 #' @param num_folds TODO
 #'
 #' @return error_results TODO
-error_cv <- function(d, list_classifiers, num_folds = 5, ...) {
-  stop("The cross-validation error rate estimator has not been implemented yet.")
+error_cv <- function(d, list_classifiers, num_folds = 5, vs_method = NULL, ...) {
+  warning("When using cross-validation, note that the 'summary' is incorrect.
+  This is a known issue.")
+  folds <- cv_partition(d$y, k = num_folds)
+  obs <- seq_along(d$y)
+  list_sim <- foreach(held_out = folds) %dopar% {
+    # Partition the data sets.
+    train_obs <- which(!(obs %in% held_out))
+    test_obs <- held_out
+
+    # Variable selection
+    kept_vars <- seq_len(ncol(d$x))
+    if(!is.null(vs_method)) {
+      kept_vars <- var_sel(d$x[train_obs,], d$y[train_obs], vs_method, ...)$kept
+    }
+    train_x <- d$x[train_obs, kept_vars]
+    train_y <- d$y[train_obs]
+    test_x <- d$x[test_obs, kept_vars]
+    test_y <- d$y[test_obs]
+
+    list_pred <- foreach(cl = list_classifiers) %do% {
+      cl_attrib <- get_cl_attrib(cl)
+
+      # Call the classifier, model selection, and prediction functions.
+      cl_out <- cl_attrib$cl_train(x = train_x, y = train_y, ...)
+      if(!is.null(cl_attrib$model_select)) {
+        cl_out <- cl_attrib$model_select(obj = cl_out, x = train_x, y = train_y)
+      }
+      test_pred <- cl_attrib$cl_predict(object = cl_out, newdata = test_x)
+      list(
+        method = cl_attrib$cl_method,
+        vs_method = vs_method,
+        train_obs = train_obs,
+        test_obs = test_obs,
+        test_class = test_y,
+        test_pred = test_pred, 
+        error = mean(test_pred != test_y)
+      )
+    }
+    list_pred
+  }
+  error_results <- do.call(rbind, lapply(list_sim, function(sim_iter) {
+    # NOTE: Sim is a list of the results FOR EACH classifier
+    do.call(rbind, lapply(sim_iter, function(sim_cl) {
+      cbind(sim_cl$method, sim_cl$error)
+    }))
+  }))
+  error_results <- data.frame(error_results, stringsAsFactors = FALSE)
+  names(error_results) <- c("method", "error_rate")
+  # The error rate gets coerced to a factor in the above cbind() call.
+  error_results$error_rate <- as.numeric(error_results$error_rate)
+  error_results
 }
 
 #' Classification error rate estimation via bootstrapping
@@ -122,7 +172,7 @@ vs_method = NULL, ...) {
       # Variable selection
       kept_vars <- seq_len(ncol(d$x))
       if(!is.null(vs_method)) {
-        kept_vars <- var_sel(d$x, d$y, vs_method, ...)$kept
+        kept_vars <- var_sel(d$x[train_obs,], d$y[train_obs], vs_method, ...)$kept
       }
       train_x <- d$x[train_obs, kept_vars]
       train_y <- d$y[train_obs]

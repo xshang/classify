@@ -2,7 +2,6 @@ Version 0.0.2
   Add unit test for model selection 
   Add unit test for variable selection
   Add unit test for cross-validation
-  Add cross-validation as error rate estimator
   Add Roxygen documentation
   Add CHANGELOG (see ggplot2 on github for example)
   Add NEWS (see ggplot2 on github for example)
@@ -11,13 +10,20 @@ Version 0.0.2
 Add to CHANGELOG
   Added plot_classify() that plots  boxplots of test error rates.
   Added variable selection to classify(). Only has ANOVA as option currently.
-  Add option for model selection, which should be added to list_classifiers.
+  Added option for model selection, which should be added to list_classifiers.
+  Added cross-validation as error rate estimator
 
 Add variable selection to classify() summary
   Include variable selection options in summary.
     Example:
       var_select = "ANOVA" 
       q = 30
+
+Fix issue with error_cv
+  The error returned for each fold is the proportion of misclassified.
+  When these are summarized, the proportions are averaged.
+  However, this reported number is incorrect when the fold count is imbalanced.
+  Example: N = 31, k = 5. First 6 folds have 5 test obs, but last has one.
 
 Implement error_apparent()
 Implement error_boot()
