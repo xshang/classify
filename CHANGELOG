@@ -1,0 +1,3 @@
+classify 0.0.1 (2011-06-18) ----------------------------------------
+  Initial version.
+  Added random splits of data into training/test sets for classifier evaluation.

@@ -1,0 +1,5 @@
+classify 0.0.2 (2011-06-20) ----------------------------------------
+  Added plot_classify() that plots boxplots of test error rates.
+  Added variable selection to classify(). Only has ANOVA as option currently.
+  Added option for model selection, which should be added to list_classifiers.
+  Added cross-validation as error rate estimator
