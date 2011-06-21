@@ -42,7 +42,8 @@ var_sel_anova <- function(x, y, q = 30) {
   F_stat_ranks <- rank(F_stats, ties = "random")
 
   kept_vars <- which(F_stat_ranks > p - q)
-  
+  dropped_vars <- which(F_stat_ranks <= p - q)
+
   list(
     kept = kept_vars,
     dropped = dropped_vars,

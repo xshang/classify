@@ -15,6 +15,9 @@ Fix issue with error_cv
   However, this reported number is incorrect when the fold count is imbalanced.
   Example: N = 31, k = 5. First 6 folds have 5 test obs, but last has one.
 
+Add unit test for the case where q < 0
+Add unit test for the case where q > p
+
 Implement error_apparent()
 Implement error_boot()
 Implement error_632()
