@@ -1,7 +1,5 @@
-Version 0.0.2
-  Add unit test for model selection 
-  Add unit test for variable selection
-  Add unit test for cross-validation
+Add unit test for model selection 
+Add unit test for cross-validation
 
 Add variable selection to classify() summary
   Include variable selection options in summary.
@@ -15,7 +13,8 @@ Fix issue with error_cv
   However, this reported number is incorrect when the fold count is imbalanced.
   Example: N = 31, k = 5. First 6 folds have 5 test obs, but last has one.
 
-Add unit test for the case where q < 0
+In var_select_anova
+Add unit test for the case where q < 1
 Add unit test for the case where q > p
 
 Implement error_apparent()
@@ -38,7 +37,6 @@ Start building a wiki as documentation for classify
 Add preprocessing options
   Normalize data
   Dimension reduction
-  Variable selection
   Others?
 
 Store and show results for model selection
