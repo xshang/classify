@@ -28,21 +28,24 @@ var_sel <- function(x, y, vs_method, ...) {
 #' that the means are equal for each class.
 #' The q variables with largest values of the F statistic are kept.
 #' The remaining p - q variables are dropped.
+#'
+#' If there is a tie in the F statistics, we rank the first column higher.
 #' 
-#' @param x TODO
-#' @param y TODO
+#' @param x data matrix with N observations and p features.
+#' @param y vector of length N with class labels for each of the N observations.
 #' @param q The number of variables to select.
 #'
-#' @return d TODO
+#' @return list with indices of the selected variables, dropped variables, and
+#' the F statistics for each column.
 var_sel_anova <- function(x, y, q = 30) {
   p <- ncol(x)
   F_stats <-  apply(x, 2, function(col) {
     summary(aov(col ~ y))[[1]][["F value"]][1]
   })
-  F_stat_ranks <- rank(F_stats, ties = "random")
+  F_stat_ranks <- as.vector(rank(F_stats, ties = "first"))
 
-  kept_vars <- which(F_stat_ranks > p - q)
-  dropped_vars <- which(F_stat_ranks <= p - q)
+  kept_vars <- as.vector(which(F_stat_ranks > p - q))
+  dropped_vars <- as.vector(which(F_stat_ranks <= p - q))
 
   list(
     kept = kept_vars,
