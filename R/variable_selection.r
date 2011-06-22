@@ -43,14 +43,14 @@ var_sel_anova <- function(x, y, q = 30) {
   F_stats <-  apply(x, 2, function(col) {
     summary(aov(col ~ y))[[1]][["F value"]][1]
   })
-  F_stat_ranks <- as.vector(rank(F_stats, ties = "first"))
+  F_stat_ranks <- rank(F_stats, ties = "first")
 
-  kept_vars <- as.vector(which(F_stat_ranks > p - q))
-  dropped_vars <- as.vector(which(F_stat_ranks <= p - q))
+  kept_vars <- which(F_stat_ranks > p - q)
+  dropped_vars <- which(F_stat_ranks <= p - q)
 
   list(
-    kept = kept_vars,
-    dropped = dropped_vars,
-    F_stats = F_stats
+    kept = as.vector(kept_vars),
+    dropped = as.vector(dropped_vars),
+    F_stats = as.vector(F_stats)
   )
 }
