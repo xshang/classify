@@ -6,16 +6,17 @@
 #' predict. An optional 'predict' can be added to list_classifiers to override the default.
 #' Other options???
 #'
-#' @param d TODO
-#' @param vs TODO
+#' @param x data matrix with N observations and p features.
+#' @param y vector of length N with class labels for each of the N observations.
+#' @param vs_method Variable selection method to use
 #' @param ... TODO
 #'
-#' @return d TODO
+#' @return list with variable selection information
 var_sel <- function(x, y, vs_method, ...) {
   VS_METHODS <- c("anova")
   vs_method <- match.arg(vs_method, VS_METHODS)
   if(vs_method == "anova") {
-    var_sel_results <- var_sel_anova(d, ...)
+    var_sel_results <- var_sel_anova(x, y, ...)
   } else {
     stop("Only the ANOVA variable selection method has been implemented.")
   }
