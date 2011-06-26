@@ -46,3 +46,8 @@ Add diagnostic tools so that test observations that are continually
 misclassified can be identified.
   Ex.: Bar graph with proportions that each observation is misclassified.
 
+Consider adding an option to store classifiers in a temporary file
+  Perhaps through 'ff' or 'bigmemory'
+  So that classifiers with large covariance matrices, for ex, do not
+    overwhelm the user's memory, in order to prevent excessive memory
+    usage, namely virtual memory.
