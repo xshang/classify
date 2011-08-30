@@ -72,3 +72,18 @@ test_that("The iris data set has 4 variables selected properly.", {
     F_out$F_vals
   )
 })
+
+test_that("The ANOVA method throws errors when q > p.", {
+	# p <- 4
+  expect_error(var_sel_anova(iris[,-5], iris[,5], q = 5))
+	expect_error(var_sel_anova(iris[,-5], iris[,5], q = 10))
+	expect_error(var_sel_anova(iris[,-5], iris[,5], q = 50))
+	expect_error(var_sel_anova(iris[,-5], iris[,5], q = 200))
+})
+
+test_that("The ANOVA method throws errors when q <= 0.", {
+  expect_error(var_sel_anova(iris[,-5], iris[,5], q = 0))
+	expect_error(var_sel_anova(iris[,-5], iris[,5], q = -1))
+	expect_error(var_sel_anova(iris[,-5], iris[,5], q = -5))
+	expect_error(var_sel_anova(iris[,-5], iris[,5], q = -30))
+})

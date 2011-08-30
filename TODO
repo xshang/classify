@@ -13,9 +13,11 @@ Fix issue with error_cv
   However, this reported number is incorrect when the fold count is imbalanced.
   Example: N = 31, k = 5. First 6 folds have 5 test obs, but last has one.
 
-In var_select_anova
-Add unit test for the case where q < 1
-Add unit test for the case where q > p
+Add function that automatically partitions a data set into K random splits and preprocesses each split.
+	The idea here is to store as much preprocessing as possible for each split.
+		Example: Say I want to apply a variable selection method to each training set
+		within each split. For each classifier that I consider, I do not want to have to repeat this process,
+		so I'd like to store the selected features by split.
 
 Implement error_apparent()
 Implement error_boot()
