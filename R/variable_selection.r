@@ -6,6 +6,7 @@
 #' predict. An optional 'predict' can be added to list_classifiers to override the default.
 #' Other options???
 #'
+#' @export
 #' @param x data matrix with N observations and p features.
 #' @param y vector of length N with class labels for each of the N observations.
 #' @param vs_method Variable selection method to use
@@ -31,7 +32,8 @@ var_sel <- function(x, y, vs_method, ...) {
 #' The remaining p - q variables are dropped.
 #'
 #' If there is a tie in the F statistics, we rank the first column higher.
-#' 
+#'
+#' @export 
 #' @param x data matrix with N observations and p features.
 #' @param y vector of length N with class labels for each of the N observations.
 #' @param q The number of variables to select.

@@ -1,5 +1,6 @@
 #' Partitions data for cross-validation
 #'
+#' @export
 #' @param y a vector of the labels of the training data
 #' @param k leave out how many observations per fold in cross-validation?
 #' @return list the indices of observations to hold out by fold..

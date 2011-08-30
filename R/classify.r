@@ -17,6 +17,7 @@
 #'   predict = "predict_rda"
 #' )
 #'
+#' @export
 #' @param list_data TODO
 #' @param list_classifiers TODO
 #' @param est TODO
@@ -54,7 +55,8 @@ classify <- function(list_data, list_classifiers, est = "split", var_sel = NULL,
 #'   model_select = "rda_model_select",
 #'   predict = "predict_rda"
 #' )
-#' 
+#'
+#' @export 
 #' @param cl TODO
 #' @return list TODO
 get_cl_attrib <- function(cl) {

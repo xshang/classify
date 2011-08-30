@@ -6,6 +6,7 @@
 #' predict. An optional 'predict' can be added to list_classifiers to override the default.
 #' Other options???
 #'
+#' @export
 #' @param d TODO
 #' @param list_classifiers TODO
 #' @param est TODO
@@ -36,6 +37,7 @@ est_error <- function(d, list_classifiers, est, var_sel = NULL, ...) {
 #'
 #' TODO
 #'
+#' @export
 #' @param d TODO
 #' @param list_classifiers TODO
 #' @param num_folds TODO
@@ -154,6 +156,7 @@ error_apparent <- function(d, list_classifiers, ...) {
 #' predict. An optional 'predict' can be added to list_classifiers to override the default.
 #' Other options???
 #'
+#' @export
 #' @param d TODO
 #' @param list_classifiers TODO
 #' @param split_pct The percentage of observations allocated as training data.
